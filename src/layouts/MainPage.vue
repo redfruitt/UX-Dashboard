@@ -14,7 +14,7 @@
 
         <q-toolbar-title v-if="$q.screen.gt.xs" shrink class="row items-center no-wrap">
           <!-- <img src="https://cdn.quasar.dev/img/layout-gallery/logo-google.svg"> -->
-          <img class="logo" src="https://www.ivp.in/wp-content/uploads/2018/10/favicon.png">
+          <img class="logo" src="https://www.designfreelogoonline.com/wp-content/uploads/2016/03/00106-3D-company-logo-design-free-logo-online-Template-01.png">
           <!-- <q-img
             src="https://www.ivp.in/wp-content/uploads/2018/10/favicon.png"
           /> -->
