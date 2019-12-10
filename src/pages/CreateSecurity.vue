@@ -1,5 +1,6 @@
 <template>
-  <div class="q-pa-xl">
+ <q-page class="page-css">
+  <div class="q-pa-xl page-css">
     <q-stepper
       v-model="step"
       vertical
@@ -201,6 +202,7 @@
 
     </q-stepper>
   </div>
+ </q-page>
 </template>
 
 <script>
@@ -308,3 +310,8 @@ export default {
   }
 }
 </script>
+<style>
+.page-css {
+  background-color: #f3f3f7;
+}
+</style>

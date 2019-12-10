@@ -26,6 +26,7 @@
         <q-space />
 
         <div class="q-gutter-sm row items-center no-wrap">
+
           <q-btn v-if="$q.screen.gt.sm" round dense flat color="text-grey-7" icon="apps">
             <q-tooltip>Google Apps</q-tooltip>
           </q-btn>
@@ -106,6 +107,51 @@
 
     <q-page-container class="main-container">
       <router-view @pushD="setPushD"/>
+      <q-page-sticky position="bottom-right" :offset="[80, 20]">
+          <q-btn id="chatButton" fab @click="chat('right')" icon="chat" color="primary" />
+          <q-dialog v-model="showChat" :position="position">
+           <div class="q-pt-xl q-pl-xl q-pr-xl row justify-center" style="background-color: white;">
+              <div style="width: 500px; max-width: 80vw; height: 320px">
+                <q-chat-message
+                  name="me"
+                  avatar="https://cdn.quasar.dev/img/avatar3.jpg"
+                  :text="[`I'm waiting for your answer..`]"
+                  stamp="7 minutes ago"
+                  sent
+                  bg-color="amber-7"
+                />
+                <q-chat-message
+                  name="Jane"
+                  avatar="https://cdn.quasar.dev/img/avatar5.jpg"
+                  text-color="white"
+                  bg-color="primary"
+                >
+                  <q-spinner-dots size="2rem" />
+                </q-chat-message>
+                <q-input class="q-pt-xl" bottom-slots v-model="chattext" label="Type"  :dense="dense">
+                  <template v-slot:before>
+                    <q-avatar>
+                      <img src="https://cdn.quasar.dev/img/avatar5.jpg">
+                    </q-avatar>
+                  </template>
+
+                  <!-- <template v-slot:append>
+                    <q-icon v-if="text !== ''" name="close" @click="text = ''" class="cursor-pointer" />
+                    <q-icon name="schedule" />
+                  </template> -->
+
+                  <!-- <template v-slot:hint>
+                    Field hint
+                  </template> -->
+
+                  <template v-slot:after>
+                    <q-btn round dense flat icon="send" />
+                  </template>
+                </q-input>
+              </div>
+            </div>
+          </q-dialog>
+      </q-page-sticky>
     </q-page-container>
   </q-layout>
 </template>
@@ -118,6 +164,10 @@ export default {
 
   data () {
     return {
+      chattext: 'I want to create a new security!',
+      position: 'bottom-right',
+      showChat: false,
+      tourValue: false,
       pushd: 0,
       active: true,
       leftDrawerOpen: false,
@@ -178,6 +228,11 @@ export default {
     changeDate (option) {
       this.byDate = option
       this.showDateOptions = false
+    },
+
+    chat (position) {
+      this.showChat = true
+      this.position = position
     }
   },
 

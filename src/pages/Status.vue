@@ -1,15 +1,15 @@
 <template>
-  <q-page>
+  <q-page class="page-css">
   <q-pull-to-refresh @refresh="onRefresh">
    <div class="q-pa-xl">
 
       <div class="row">
-          <div class="col">
+          <div id="table" class="col">
             <q-table
               class="shadow-8 rounded-borders .my-sticky-header-column-table"
               :grid="grid"
               dense
-              title="Treats"
+              title="Downstream Post Grid"
               :data="data"
               :columns="columns"
               row-key="name"
@@ -30,6 +30,8 @@
                <q-space />
                 <q-space />
                  <q-space />
+               <q-btn push color="white" text-color="primary" label="Guide me" v-on:click.stop="startTour()" class="q-mr-md"/>
+
               <q-input rounded outlined dense debounce="300" v-model="filter" placeholder="Search" class="q-pr-md">
                 <template v-slot:append>
                   <q-icon id="RowSearch" name="search" />
@@ -135,6 +137,7 @@ import 'driver.js/dist/driver.min.css'
 export default {
   data () {
     return {
+      tourValue: false,
       label: '',
       grid: false,
       separator: 'cell',
@@ -155,49 +158,56 @@ export default {
 
     }
   },
+
   mounted () {
     this.onRefresh()
     this.$nextTick(() => {
-      const driver = new Driver()
 
-      // Define the steps for introduction
-      driver.defineSteps([
-        {
-          element: '#ColumnSelector',
-          popover: {
-            className: 'first-step-popover-class',
-            title: 'Column Selector',
-            description: 'Column Selector',
-            position: 'top'
-          }
-        },
-        {
-          element: '#RowSearch',
-          popover: {
-            title: 'RowSearch',
-            description: 'RowSearch',
-            position: 'top'
-          }
-        },
-        {
-          element: '#GridStyle',
-          popover: {
-            title: 'GridStyle',
-            description: 'GridStyle',
-            position: 'top'
-          }
-        }
-      ])
-
-      // Start the introduction
-      // driver.start()
     })
   },
+
   methods: {
 
     getSelectedString () {
       return this.selected.length === 0 ? '' : `${this.selected.length} record${this.selected.length > 1 ? 's' : ''} selected of ${this.data.length}`
     },
+
+    startTour () {
+      this.$nextTick(() => {
+        const driver = new Driver()
+        // Define the steps for introduction
+        driver.defineSteps([
+          {
+            element: '#ColumnSelector',
+            popover: {
+              className: 'first-step-popover-class',
+              title: 'Choose visible columns',
+              description: 'You can select/deselect columns that should be visible within the grid.',
+              position: 'left'
+            }
+          },
+          {
+            element: '#RowSearch',
+            popover: {
+              title: 'Search for columns',
+              description: 'Returns queries rows that match the search clause',
+              position: 'left'
+            }
+          },
+          {
+            element: '#table',
+            popover: {
+              title: 'Responsive Grid',
+              description: 'The Grid is responsive and adjusts to various screen sizes.',
+              position: 'left'
+            }
+          }
+        ])
+
+        driver.start()
+      })
+    },
+
     // emulate fetching data from server
     onRefresh (done) {
       this.loading = true
@@ -216,6 +226,9 @@ export default {
 }
 </script>
 <style lang="sass">
+.page-css
+  background-color: #f3f3f7
+
 .my-sticky-header-column-table
   /* specifying max-width so the example can
     highlight the sticky column on any browser window */

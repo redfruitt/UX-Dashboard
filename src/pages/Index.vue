@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="page-css">
     <div class="q-pa-xl">
        <div class="dashboard-parent">
           <q-tabs
@@ -18,21 +18,21 @@
             <q-tab name="oa" label="Operational Analytics" />
           </q-tabs>
 
-          <div class="q-gutter-y-sm">
+          <div class="q-gutter-y-sm" style="background-color: #f3f3f7;">
             <q-tab-panels
               v-model="tab"
               animated
-              class="q-pt-xl panel-bg"
-              transition-prev="scale"
-              transition-next="scale"
+              class="q-pt-md page-css"
+              transition-prev="fade"
+              transition-next="fade"
 
             >
               <q-tab-panel name="securities">
-                <div class="fit row no-wrap justify-start items-start content-start q-gutter-xl">
+                <div class="fit row wrap justify-start items-start content-start q-gutter-md page-css">
                   <div class="col-auto">
                     <q-card class="rounded-borders shadow-7">
                       <div class="q-pa-md">
-                        <div class="q-pl-md text-h6">
+                        <div id="securitychangestile" class="q-pl-md text-h6">
                           Security Changes
                         </div>
                         <q-list class="q-pt-md q-pl-xl q-pb-sm q-pr-xl">
@@ -83,11 +83,11 @@
                   <div class="col-auto">
                     <q-card class="rounded-borders shadow-7">
                       <div class="q-pa-md">
-                        <div class="q-pl-md text-h6">
+                        <div id="postsummarytile" class="q-pl-md text-h6">
                           Post Summary
                         </div>
                       </div>
-                      <q-list class="q-pb-md">
+                      <q-list class="q-pb-md q-pl-sm q-pr-md">
                           <q-item>
                             <q-item-section class="q-pl-xl q-pr-xl" avatar>
                               <div class="row">
@@ -155,152 +155,101 @@
                         </q-list>
                     </q-card>
                   </div>
-                  <div class="col-auto">
+                  <div class="col-grow">
                     <q-card class="rounded-borders shadow-7">
                       <div class="q-pa-md">
-                        <div class="q-pl-md text-h6">
+                        <div class="q-pl-md q-pb-md text-h6">
                           Data Exceptions
                         </div>
                       </div>
-                      <div class="q-pa-md">
-                        <div class="row">
-                          <div class="col-auto">
-                             <q-chip outline clickable @click="chipClick" color="primary" text-color="white" size="16px" icon="">
-                                Vendor Missing <q-chip color="primary" text-color="white" size="10px"> 16 </q-chip>
-                              </q-chip>
-                          </div>
-                           <div class="col-auto">
-                             <q-chip outline clickable @click="chipClick" color="primary" text-color="white" size="16px" icon="">
-                                No Vendor Value <q-chip color="primary" text-color="white" size="10px"> 4088 </q-chip>
-                              </q-chip>
-                          </div>
-                           <div class="col-auto">
-                             <q-chip outline clickable @click="chipClick" color="primary" text-color="white" size="16px" icon="">
-                                Invalid Data <q-chip color="primary" text-color="white" size="10px"> 1024 </q-chip>
+                      <div class="fit row q-pl-md q-pb-sm q-gutter-xs justify">
 
-                              </q-chip>
+                        <div class="col-grow q-pl-xl">
+                          <div class="q-pl-md text-h8">
+                            <q-badge color="blue">
+                              Value Changed
+                            </q-badge>
                           </div>
-                          <!-- <div class="col-auto">
-                             <q-chip outline clickable @click="onClick" color="primary" text-color="white" size="16px" icon="">
-                                Ref Data <q-chip color="primary" text-color="white" size="10px"> 546 </q-chip>
-                              </q-chip>
-                          </div> -->
+                           <div class="q-gutter-xs">
+                              <q-knob
+                                readonly
+                                v-model="excep2"
+                                show-value
+                                size="90px"
+                                :thickness="0.22"
+                                color="lime"
+                                track-color="lime-3"
+                                class="text-lime q-ma-md"
+                              />
+                               <q-btn dense color="primary" round icon="bar_chart" class="q-ml-md" @click="chipClick">
+                                <!-- <q-badge color="red" floating>4</q-badge> -->
+                              </q-btn>
 
+                          </div>
                         </div>
-                        <div class="row">
-                          <div class="col-auto">
-                             <q-chip outline clickable @click="chipClick" color="primary" text-color="white" size="16px" icon="">
-                                Underlying <q-chip color="primary" text-color="white" size="10px"> 12 </q-chip>
-                              </q-chip>
+                         <div class="col-grow">
+                          <div class="q-pl-md text-h8">
+                            <q-badge color="blue">
+                              Vendor Mismatch
+                            </q-badge>
                           </div>
-                           <div class="col-auto">
-                             <q-chip outline clickable @click="chipClick" color="primary" text-color="white" size="16px" icon="">
-                                Vendor Mismatch <q-chip color="primary" text-color="white" size="10px"> 5433 </q-chip>
-                              </q-chip>
-                          </div>
-                           <div class="col-auto">
-                             <q-chip outline clickable @click="chipClick" color="primary" text-color="white" size="16px" icon="">
-                                Value Changed <q-chip color="primary" text-color="white" size="10px"> 23 </q-chip>
-                              </q-chip>
-                          </div>
-                          <!-- <div class="col-auto">
-                             <q-chip outline clickable @click="onClick" color="primary" text-color="white" size="16px" icon="">
-                                Validations NM
-                              </q-chip>
-                          </div> -->
-                        </div>
-                        <div class="row q-pb-md">
-                          <div class="col-auto">
-                             <q-chip outline clickable @click="chipClick" color="primary" text-color="white" size="16px" icon="">
-                                Geneva Mismatches <q-chip color="primary" text-color="white" size="10px"> 1132 </q-chip>
-                              </q-chip>
-                          </div>
-                           <div class="col-auto">
-                             <q-chip outline clickable @click="chipClick" color="primary" text-color="white" size="16px" icon="">
-                                Anna Mismatches <q-chip color="primary" text-color="white" size="10px"> 5432 </q-chip>
-                              </q-chip>
-                          </div>
-                           <!-- <div class="col-auto">
-                             <q-chip size="16px" icon="">
-                                Value Changed
-                              </q-chip>
-                          </div> -->
-                          <!-- <div class="col-auto">
-                             <q-chip size="16px" icon="">
+                         <div class="q-gutter-xs q-pb-xs">
+                              <q-knob
+                                readonly
+                                v-model="excep1"
+                                show-value
+                                size="90px"
+                                :thickness="0.22"
+                                color="orange"
+                                track-color="orange-3"
+                                class="text-orange q-ma-md"
+                              />
+                              <q-btn dense color="primary" round icon="bar_chart" class="q-ml-md" @click="chipClick">
+                                <!-- <q-badge color="red" floating>4</q-badge> -->
+                              </q-btn>
 
-                              </q-chip>
-                          </div> -->
+                          </div>
                         </div>
+                         <!-- <div class="col-grow">
+                          <div class="q-pl-md text-h8">
+                            Value Changed
+                          </div>
+                          <q-knob
+                            readonly
+                            v-model="value"
+                            show-value
+                            size="90px"
+                            :thickness="0.22"
+                            color="orange"
+                            track-color="orange-3"
+                            class="text-orange q-ma-md"
+                          />
+                        </div> -->
                       </div>
 
                     </q-card>
                     <q-dialog v-model="card">
                       <q-card style="max-width: 800px">
+                        <!-- <vue-highcharts :highcharts="Highcharts" :options="drilldownOptions" ref="drilldownChart"></vue-highcharts> -->
                         <vue-highcharts :options="pieOptions" ref="pieChart"></vue-highcharts>
-                        <!-- <q-img src="https://media-cdn.tripadvisor.com/media/photo-s/0a/47/a8/91/chicken-salad-sandwich.jpg" />
-
-                        <q-card-section>
-                          <q-btn
-                            fab
-                            color="primary"
-                            icon="place"
-                            class="absolute"
-                            style="top: 0; right: 12px; transform: translateY(-50%);"
-                          />
-
-                          <div class="row no-wrap items-center">
-                            <div class="col text-h6 ellipsis">Cafe Basilico</div>
-                            <div class="col-auto text-grey q-pt-md">
-                              <q-icon name="place" /> 250 ft
-                            </div>
-                          </div>
-
-                          <q-rating v-model="stars" :max="5" size="32px" />
-                        </q-card-section>
-
-                        <q-card-section>
-                          <div class="text-subtitle1">$・Italian, Cafe</div>
-                          <div class="text-subtitle2 text-grey">Small plates, salads & sandwiches in an intimate setting.</div>
-                        </q-card-section>
-
-                        <q-separator />
-
-                        <q-card-actions>
-                          <q-btn flat round icon="event" v-close-popup />
-                          <q-btn flat v-close-popup>5:30PM</q-btn>
-                          <q-btn flat v-close-popup>7:30PM</q-btn>
-                          <q-btn flat v-close-popup>9:00PM</q-btn>
-                          <q-btn flat color="primary" v-close-popup>Reserve</q-btn>
-                        </q-card-actions> -->
                       </q-card>
                     </q-dialog>
                   </div>
 
                 </div>
-                <div class="fit row wrap justify-start items-start content-start q-gutter-xl q-pt-xl">
+                <div class="fit row wrap justify-start items-start content-start q-gutter-md q-pt-md">
                   <div class="col-auto">
-                    <!-- <div class="q-pa-md">
-                        <div class="q-pl-md text-h6">
-                          Portfolio
-                        </div>
-                    </div> -->
 
                      <q-card class="rounded-borders shadow-7 q-pl-xl q-pr-xl">
-                        <!-- <q-card-section>
-                          <div class="text-h6">
-                          Portfolio
-                          </div>
-                        </q-card-section>
-                        <q-card-section> -->
-                      <!-- <vue-highcharts :options="areaOptions" ref="areaCharts"></vue-highcharts> -->
+
                           <vue-highcharts :highcharts="Highcharts" :options="drilldownOptions" ref="drilldownChart"></vue-highcharts>
-                         <!-- </q-card-section> -->
                     </q-card>
                   </div>
 
-                  <div class="col-auto">
+                  <div class="col-grow">
                     <q-card class="rounded-borders shadow-7">
                       <vue-highcharts :options="resoptions"></vue-highcharts>
+                      <!-- <vue-highcharts :highcharts="Highcharts" :options="drilldownOptions" ref="drilldownChart"></vue-highcharts> -->
                     </q-card>
                   </div>
                 </div>
@@ -313,6 +262,13 @@
                   <q-card class="rounded-borders shadow-7">
                     <vue-highcharts :options="areaOptions" ref="areaCharts"></vue-highcharts>
                    </q-card>
+
+                  <!-- <q-card class="rounded-borders shadow-7">
+                   <vue-highcharts
+                      :options="threeDOptions"
+                      :highcharts="Highcharts"
+                    ></vue-highcharts>
+                  </q-card> -->
                 </div>
               </q-tab-panel>
 
@@ -399,8 +355,13 @@ import VueHighcharts from 'vue2-highcharts'
 import * as data from 'src/statics/data.js'
 import Drilldown from 'highcharts/modules/drilldown.js'
 import Highcharts from 'highcharts'
+import Highcharts3D from 'highcharts/highcharts-3d'
+import Driver from 'driver.js'
+import 'driver.js/dist/driver.min.css'
 
 Drilldown(Highcharts)
+Highcharts3D(Highcharts)
+
 Highcharts.setOptions({
   lang: {
     drillUpText: 'Back'
@@ -417,6 +378,8 @@ export default {
   },
   data () {
     return {
+      excep1: 78,
+      excep2: 13,
       card: false,
       dummy: 1,
       tab: 'securities',
@@ -425,8 +388,48 @@ export default {
       resoptions: data.responsiveData,
       pieOptions: data.PieData,
       Highcharts: Highcharts,
-      drilldownOptions: data.DrilldownData
+      drilldownOptions: data.DrilldownData,
+      threeDOptions: data.threeDData
     }
+  },
+
+  mounted () {
+    this.onRefresh()
+    this.$nextTick(() => {
+      const driver = new Driver()
+
+      // Define the steps for introduction
+      driver.defineSteps([
+        {
+          element: '#securitychangestile',
+          popover: {
+            className: 'first-step-popover-class',
+            title: 'Security Changes',
+            description: 'Security Changes',
+            position: 'top'
+          }
+        },
+        {
+          element: '#postsummarytile',
+          popover: {
+            title: 'Post Summary',
+            description: 'Post Summary',
+            position: 'top'
+          }
+        }
+        // {
+        //   element: '#GridStyle',
+        //   popover: {
+        //     title: 'GridStyle',
+        //     description: 'GridStyle',
+        //     position: 'top'
+        //   }
+        // }
+      ])
+
+      // Start the introduction
+      driver.start()
+    })
   },
 
   methods: {
@@ -450,8 +453,19 @@ export default {
 <style>
 /* @import 'https://code.highcharts.com/css/highcharts.css'; */
 
-.panel-bg {
+/* .panel-bg {
   background-color: #fafafa
+} */
+
+.dashboard-parent {
+  background-color: #f3f3f7;
+}
+.page-css {
+  background-color: #f3f3f7;
+}
+
+#postsummarytile {
+  padding-bottom: 10px;
 }
 
 /* .highcharts-title {
